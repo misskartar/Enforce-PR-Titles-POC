@@ -1,18 +1,15 @@
 {
-    "LABEL": {
-      "name": "title needs formatting",
-      "color": "EEEEEE"
-    },
-    "CHECKS": {
-      "prefixes": ["fix: ", "feat: "],
-      "regexp": "docs\\(v[0-9]\\): ",
-      "regexpFlags": "i",
-      "ignoreLabels" : ["dont-check-PRs-with-this-label", "meta"]
-    },
-    "MESSAGES": {
-      "success": "All OK",
-      "failure": "Failing CI test",
-      "notice": ""
-    }
+  "LABEL": {
+    "name": "PR Title Needs Formatting",
+    "color": "EEEEEE"
+  },
+  "CHECKS": {
+    "prefixes": ["bugfix: ", "feature: "],
+    "ignoreLabels" : ["skip-pr-title-check"]
+  },
+  "MESSAGES": {
+    "success": "PR Title OK",
+    "failure": "Failing PR Title Check",
+    "notice": ""
   }
-  
+}
