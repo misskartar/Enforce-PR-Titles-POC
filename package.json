@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "prepare:pr": "ncc build ./.github/pr-title-checker/index.js -o dist --source-map"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.33.0"
+  }
+}
