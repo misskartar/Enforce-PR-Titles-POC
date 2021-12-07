@@ -1,10 +1,11 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+import { Octokit } from "@octokit/action";
+
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 const issue_number = github.context.issue.number;
 const configPath = process.env.INPUT_CONFIGURATION_PATH;
 const passOnOctokitError = process.env.INPUT_PASS_ON_OCTOKIT_ERROR === "true";
-const { Octokit } = require("@octokit/action");
 
 let octokit;
 
@@ -27,7 +28,7 @@ async function run() {
     CHECKS.ignoreLabels = CHECKS.ignoreLabels || [];
     MESSAGES = MESSAGES || {};
     MESSAGES.success = MESSAGES.success || "PR Title OK";
-    MESSAGES.failure = MESSAGES.failure || "Failing PR Title Check";
+    MESSAGES.failure = MESSAGES.failure || "PR Title not following convential commits format";
     MESSAGES.notice = MESSAGES.notice || "";
 
     for (let i = 0; i < labels.length; i++) {
