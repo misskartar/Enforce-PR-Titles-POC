@@ -1,7 +1,7 @@
 {
   "LABEL": {
-    "name": "PR Title Needs Formatting",
-    "color": "ff80c8"
+    "name": "PR Title not following convential commits format",
+    "color": "EEEEEE"
   },
   "CHECKS": {
     "regexp": "(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\\([a-z0-9\\s]+\\))?(:\\s)([a-z0-9\\s]+)",
@@ -12,7 +12,7 @@
   },
   "MESSAGES": {
     "success": "PR Title OK",
-    "failure": "Failing PR Title Check",
+    "failure": "PR Title not following convential commits format",
     "notice": ""
   }
 }
