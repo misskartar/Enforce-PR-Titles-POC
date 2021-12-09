@@ -114,12 +114,11 @@ __nccwpck_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(_actions_github__WEBPACK_IMPORTED_MODULE_1__);
 
 
-const { Octokit } = __nccwpck_require__(820);
-
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 const issue_number = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.issue.number;
 const configPath = process.env.INPUT_CONFIGURATION_PATH;
 const passOnOctokitError = process.env.INPUT_PASS_ON_OCTOKIT_ERROR === "true";
+const { Octokit } = __nccwpck_require__(820);
 
 let octokit;
 
@@ -137,19 +136,19 @@ async function run() {
       return;
     }
     let { CHECKS, LABEL, MESSAGES } = JSON.parse(config);
-    LABEL.name = LABEL.name || "PR Title Needs Formatting";
+    LABEL.name = LABEL.name || "title needs formatting";
     LABEL.color = LABEL.color || "eee";
     CHECKS.ignoreLabels = CHECKS.ignoreLabels || [];
     MESSAGES = MESSAGES || {};
-    MESSAGES.success = MESSAGES.success || "PR Title OK";
-    MESSAGES.failure = MESSAGES.failure || "PR Title not following convential commits format";
+    MESSAGES.success = MESSAGES.success || "All OK";
+    MESSAGES.failure = MESSAGES.failure || "Failing CI test";
     MESSAGES.notice = MESSAGES.notice || "";
 
     for (let i = 0; i < labels.length; i++) {
       for (let j = 0; j < CHECKS.ignoreLabels.length; j++) {
         if (labels[i].name == CHECKS.ignoreLabels[j]) {
           _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Ignoring Title Check for label - ${labels[i].name}`);
-          removeLabel(labels, LABEL.name, true);
+          removeLabel(labels, LABEL.name);
           return;
         }
       }
@@ -171,7 +170,7 @@ async function run() {
     if (CHECKS.prefixes && CHECKS.prefixes.length) {
       for (let i = 0; i < CHECKS.prefixes.length; i++) {
         if (title.startsWith(CHECKS.prefixes[i])) {
-          removeLabel(labels, LABEL.name, CHECKS.alwaysPassCI);
+          removeLabel(labels, LABEL.name);
           _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(MESSAGES.success);
           return;
         }
@@ -181,7 +180,7 @@ async function run() {
     if (CHECKS.regexp) {
       let re = new RegExp(CHECKS.regexp, CHECKS.regexpFlags || "");
       if (re.test(title)) {
-        removeLabel(labels, LABEL.name, CHECKS.alwaysPassCI);
+        removeLabel(labels, LABEL.name);
         _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(MESSAGES.success);
         return;
       }
@@ -227,7 +226,7 @@ async function addLabel(name) {
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Added label (${name}) to PR - ${addLabelResponse.status}`);
 }
 
-async function removeLabel(labels, name, alwaysPassCI) {
+async function removeLabel(labels, name) {
   try {
     if (
       !labels
@@ -246,12 +245,7 @@ async function removeLabel(labels, name, alwaysPassCI) {
     });
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Removed label - ${removeLabelResponse.status}`);
   } catch (error) {
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(error);
-    if (alwaysPassCI) {
-      _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Failed to remove label (${name}) from PR`);
-    } else {
-      _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(`Failed to remove label (${name}) from PR`);
-    }
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Failed to remove label (${name}) from PR: ${error}`);
   }
 }
 
@@ -284,7 +278,6 @@ try {
 if (octokit) {
   run();
 }
-
 })();
 
 module.exports = __webpack_exports__;
