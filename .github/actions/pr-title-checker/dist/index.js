@@ -112,11 +112,9 @@ __nccwpck_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1__ = __nccwpck_require__(716);
 /* harmony import */ var _actions_github__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__nccwpck_require__.n(_actions_github__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _octokit_action__WEBPACK_IMPORTED_MODULE_2__ = __nccwpck_require__(820);
-/* harmony import */ var _octokit_action__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__nccwpck_require__.n(_octokit_action__WEBPACK_IMPORTED_MODULE_2__);
 
 
-
+const { Octokit } = __nccwpck_require__(820);
 
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 const issue_number = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.issue.number;
@@ -278,7 +276,7 @@ async function handleOctokitError(e) {
 }
 
 try {
-  octokit = new _octokit_action__WEBPACK_IMPORTED_MODULE_2__.Octokit();
+  octokit = new Octokit();
 } catch (e) {
   handleOctokitError(e);
 }
