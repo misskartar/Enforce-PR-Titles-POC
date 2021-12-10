@@ -50708,12 +50708,12 @@ async function run() {
       return;
     }
     let { CHECKS, LABEL, MESSAGES } = JSON.parse(config);
-    LABEL.name = LABEL.name || "PR Title Needs Formatting";
+    LABEL.name = LABEL.name || "PR title not in convential commits format";
     LABEL.color = LABEL.color || "eee";
     CHECKS.ignoreLabels = CHECKS.ignoreLabels || [];
     MESSAGES = MESSAGES || {};
     MESSAGES.success = MESSAGES.success || "PR Title OK";
-    MESSAGES.failure = MESSAGES.failure || "Failing PR Title Check";
+    MESSAGES.failure = MESSAGES.failure || "Failing PR Title Check, title not in convential commits format";
     MESSAGES.notice = MESSAGES.notice || "";
 
     for (let i = 0; i < labels.length; i++) {
@@ -50840,9 +50840,9 @@ async function getJSON(repoPath) {
 async function handleOctokitError(e) {
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Octokit Error - ${e}`);
   if (passOnOctokitError) {
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.info("Passing CI regardless");
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.info("Passing Title Check: Octokit error");
   } else {
-    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed("Failing CI test");
+    _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed("FAIL: PR title not in convential commits format");
   }
 }
 

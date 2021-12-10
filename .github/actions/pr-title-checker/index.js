@@ -22,12 +22,12 @@ async function run() {
       return;
     }
     let { CHECKS, LABEL, MESSAGES } = JSON.parse(config);
-    LABEL.name = LABEL.name || "PR Title Needs Formatting";
+    LABEL.name = LABEL.name || "PR title not in convential commits format";
     LABEL.color = LABEL.color || "eee";
     CHECKS.ignoreLabels = CHECKS.ignoreLabels || [];
     MESSAGES = MESSAGES || {};
     MESSAGES.success = MESSAGES.success || "PR Title OK";
-    MESSAGES.failure = MESSAGES.failure || "Failing PR Title Check";
+    MESSAGES.failure = MESSAGES.failure || "Failing PR Title Check, title not in convential commits format";
     MESSAGES.notice = MESSAGES.notice || "";
 
     for (let i = 0; i < labels.length; i++) {
@@ -154,9 +154,9 @@ async function getJSON(repoPath) {
 async function handleOctokitError(e) {
   core.info(`Octokit Error - ${e}`);
   if (passOnOctokitError) {
-    core.info("Passing CI regardless");
+    core.info("Passing Title Check: Octokit error");
   } else {
-    core.setFailed("Failing CI test");
+    core.setFailed("FAIL: PR title not in convential commits format");
   }
 }
 

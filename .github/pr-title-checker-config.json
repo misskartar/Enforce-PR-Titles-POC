@@ -1,6 +1,6 @@
 {
   "LABEL": {
-    "name": "PR Title Needs Formatting",
+    "name": "PR title not in convential commits format",
     "color": "EEEEEE"
   },
   "CHECKS": {
@@ -12,7 +12,7 @@
   },
   "MESSAGES": {
     "success": "PR Title OK",
-    "failure": "Failing PR Title Check",
+    "failure": "Failing PR Title Check, title not in convential commits format",
     "notice": ""
   }
 }
