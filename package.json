@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "prepare:pr": "ncc build ./.github/pr-title-checker/index.js -o ./.github/pr-title-checker/dist/ --source-map"
+    "prepare:pr": "ncc build ./.github/actions/pr-title-checker/index.js -o ./.github/actions/pr-title-checker/dist/ --source-map"
   },
   "devDependencies": {
     "@actions/core": "^1.6.0",
